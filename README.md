@@ -1,5 +1,7 @@
 # CODTECH-TASK2
 
+Name: JEEVITHAA B K Company: CODTECH IT SOLUTIONS ID:CT08DS1995 Domain: Java Programming Duration: JUNE TO JULY 2024
+
 ### Overview of the Online Banking System Project
 
 #### Project Description
