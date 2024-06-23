@@ -79,14 +79,29 @@ public class OnlineBankingSystem {
             int choice = scanner.nextInt();
             scanner.nextLine();
             switch (choice) {
-                case 1 -> createAccount();
-                case 2 -> depositFunds();
-                case 3 -> withdrawFunds();
-                case 4 -> transferFunds();
-                case 5 -> viewTransactionHistory();
-                case 6 -> managePersonalInformation();
-                case 7 -> { System.out.println("Exiting..."); return; }
-                default -> System.out.println("Invalid option.");
+                case 1:
+                    createAccount();
+                    break;
+                case 2:
+                    depositFunds();
+                    break;
+                case 3:
+                    withdrawFunds();
+                    break;
+                case 4:
+                    transferFunds();
+                    break;
+                case 5:
+                    viewTransactionHistory();
+                    break;
+                case 6:
+                    managePersonalInformation();
+                    break;
+                case 7:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid option.");
             }
         }
     }
