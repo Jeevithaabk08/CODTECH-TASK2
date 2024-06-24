@@ -1,116 +1,84 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
-class BankDetails {
-    private String accno;
-    private String name;
-    private String acc_type;
-    private long balance;
-    Scanner sc = new Scanner(System.in);
+public class StudentGrades {
 
-    // Method to open a new account
-    public void openAccount() {
-        System.out.print("Enter Account No: ");
-        accno = sc.next();
-        System.out.print("Enter Account type: ");
-        acc_type = sc.next();
-        System.out.print("Enter Name: ");
-        name = sc.next();
-        System.out.print("Enter Balance: ");
-        balance = sc.nextLong();
+    static class Grade {
+        String subject;
+        double score;
+
+        Grade(String subject, double score) {
+            this.subject = subject;
+            this.score = score;
+        }
     }
 
-    // Method to display account details
-    public void showAccount() {
-        System.out.println("Name of account holder: " + name);
-        System.out.println("Account no.: " + accno);
-        System.out.println("Account type: " + acc_type);
-        System.out.println("Balance: " + balance);
+    public static double calculateAverage(ArrayList<Grade> grades) {
+        double sum = 0;
+        for (Grade grade : grades) {
+            sum += grade.score;
+        }
+        return sum / grades.size();
     }
 
-    // Method to deposit money
-    public void deposit() {
-        long amt;
-        System.out.println("Enter the amount you want to deposit: ");
-        amt = sc.nextLong();
-        balance += amt;
-    }
-
-    // Method to withdraw money
-    public void withdrawal() {
-        long amt;
-        System.out.println("Enter the amount you want to withdraw: ");
-        amt = sc.nextLong();
-        if (balance >= amt) {
-            balance -= amt;
-            System.out.println("Balance after withdrawal: " + balance);
+    public static String getLetterGrade(double average) {
+        if (average >= 90) {
+            return "A";
+        } else if (average >= 80) {
+            return "B";
+        } else if (average >= 70) {
+            return "C";
+        } else if (average >= 60) {
+            return "D";
         } else {
-            System.out.println("Insufficient balance. Transaction failed.");
+            return "F";
         }
     }
 
-    // Method to search an account by account number
-    public boolean search(String ac_no) {
-        if (accno.equals(ac_no)) {
-            showAccount();
-            return true;
+    public static double getGPA(double average) {
+        if (average >= 90) {
+            return 4.0;
+        } else if (average >= 80) {
+            return 3.0;
+        } else if (average >= 70) {
+            return 2.0;
+        } else if (average >= 60) {
+            return 1.0;
+        } else {
+            return 0.0;
         }
-        return false;
     }
-}
 
-public class BankingApp {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("How many customers do you want to input? ");
-        int n = sc.nextInt();
-        BankDetails[] customers = new BankDetails[n];
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Grade> grades = new ArrayList<>();
 
-        for (int i = 0; i < customers.length; i++) {
-            customers[i] = new BankDetails();
-            customers[i].openAccount();
+        System.out.println("Enter grades for different subjects. Type 'done' when finished.");
+
+        while (true) {
+            System.out.print("Enter subject: ");
+            String subject = scanner.nextLine();
+            if (subject.equalsIgnoreCase("done")) {
+                break;
+            }
+
+            System.out.print("Enter score: ");
+            double score = scanner.nextDouble();
+            scanner.nextLine();
+
+            grades.add(new Grade(subject, score));
         }
 
-        int choice;
-        do {
-            System.out.println("\n*** Banking System Application ***");
-            System.out.println("1. Display all account details");
-            System.out.println("2. Search by Account number");
-            System.out.println("3. Deposit money");
-            System.out.println("4. Withdraw money");
-            System.out.println("5. Exit");
-            System.out.print("Enter your choice: ");
-            choice = sc.nextInt();
+        if (grades.size() == 0) {
+            System.out.println("No grades entered.");
+        } else {
+            double average = calculateAverage(grades);
+            String letterGrade = getLetterGrade(average);
+            double gpa = getGPA(average);
 
-            switch (choice) {
-                case 1:
-                    for (BankDetails customer : customers) {
-                        customer.showAccount();
-                    }
-                    break;
-                case 2:
-                    System.out.print("Enter account number to search: ");
-                    String accountNumber = sc.next();
-                    boolean found = false;
-                    for (BankDetails customer : customers) {
-                        found = customer.search(accountNumber);
-                        if (found) break;
-                    }
-                    if (!found) {
-                        System.out.println("Account not found.");
-                    }
-                    break;
-                case 3:
-                    // Implement deposit functionality
-                    break;
-                case 4:
-                    // Implement withdrawal functionality
-                    break;
-                case 5:
-                    System.out.println("Exiting the application. Thank you!");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        } while (choice != 5);
+            System.out.println("Average Score: " + average);
+            System.out.println("Letter Grade: " + letterGrade);
+            System.out.println("GPA: " + gpa);
+        }
     }
 }
